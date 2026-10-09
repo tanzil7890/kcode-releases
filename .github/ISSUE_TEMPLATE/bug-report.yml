@@ -1,0 +1,31 @@
+name: Bug report
+description: Something in kcode is broken or behaves unexpectedly.
+labels: [bug]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: What you expected, what happened instead, and any error message.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: The prompt or commands you ran, and which browser (local Chrome or a cloud provider).
+  - type: input
+    id: koracode-version
+    attributes:
+      label: kcode version
+      description: Output of `kcode --version`.
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: macOS 15.5 (arm64)
+  - type: input
+    id: terminal
+    attributes:
+      label: Terminal
+      placeholder: iTerm2, VS Code, Terminal.app, ...

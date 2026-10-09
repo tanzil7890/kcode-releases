@@ -1,0 +1,38 @@
+name: mirror-release
+
+# One-off: copies a release (notes and every download) from another repository
+# into this one, on GitHub's network.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag to copy (e.g. v0.3.2)
+        required: true
+      source:
+        description: Repository to copy from
+        required: true
+      latest:
+        description: Mark the copy as the latest release
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  mirror:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Copy the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+          SOURCE: ${{ inputs.source }}
+          LATEST: ${{ inputs.latest }}
+        run: |
+          mkdir assets
+          gh release download "$TAG" --repo "$SOURCE" --dir assets
+          gh release view "$TAG" --repo "$SOURCE" --json body --jq .body > notes.md
+          if [ "$LATEST" = "true" ]; then flag=--latest; else flag=--latest=false; fi
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --title "$TAG" --notes-file notes.md "$flag" assets/*
+          echo "Copied $(ls assets | wc -l) assets for $TAG" >> "$GITHUB_STEP_SUMMARY"
