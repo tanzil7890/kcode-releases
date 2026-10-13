@@ -1,0 +1,882 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KoraCode Docs</title>
+    <meta
+      name="description"
+      content="How to install and use KoraCode, the browser agent harness: connect a model and a browser, watch it work live in the terminal, cloud browsers, workflow graphs for long-running work, and configuration."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kcode.outhad.com/docs/" />
+    <meta property="og:title" content="KoraCode Docs" />
+    <meta
+      property="og:description"
+      content="Install KoraCode, connect a model and a browser, and run browser tasks from your terminal."
+    />
+    <meta name="theme-color" content="#0c0c0e" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0c0e'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23fab283'%3Ek%3C/text%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --bg: #0c0c0e;
+        --panel: #141417;
+        --panel-2: #1b1b1f;
+        --line: #26262c;
+        --text: #ececf0;
+        --muted: #9a9aa5;
+        --accent: #fab283;
+        --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+        --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      }
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #fbfbfa;
+          --panel: #ffffff;
+          --panel-2: #f3f3f1;
+          --line: #e4e4e0;
+          --text: #18181b;
+          --muted: #5f5f6a;
+          --accent: #c4621f;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+        scroll-padding-top: 20px;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font: 16px/1.7 var(--sans);
+      }
+      a {
+        color: var(--accent);
+      }
+      .wrap {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .brand {
+        font: 700 20px/1 var(--mono);
+        letter-spacing: -0.5px;
+        text-decoration: none;
+        color: var(--text);
+      }
+      .brand span {
+        color: var(--muted);
+        font-weight: 400;
+      }
+      .brand em {
+        font-style: normal;
+        color: var(--muted);
+        font: 400 15px var(--sans);
+        margin-left: 10px;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        margin-left: 22px;
+        font-size: 15px;
+      }
+      nav a:hover,
+      nav a.active {
+        color: var(--text);
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 48px;
+        padding: 36px 0 80px;
+      }
+      aside {
+        position: sticky;
+        top: 24px;
+        align-self: start;
+        font-size: 14px;
+      }
+      aside p {
+        margin: 0 0 10px;
+        font: 600 12px var(--mono);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--muted);
+      }
+      aside a {
+        display: block;
+        color: var(--muted);
+        text-decoration: none;
+        padding: 4px 0;
+      }
+      aside a:hover {
+        color: var(--text);
+      }
+      article {
+        min-width: 0;
+      }
+      h1 {
+        font-size: 40px;
+        letter-spacing: -1px;
+        line-height: 1.1;
+        margin: 0 0 6px;
+      }
+      .tagline {
+        color: var(--muted);
+        font-size: 19px;
+        margin: 0 0 22px;
+      }
+      h2 {
+        font-size: 26px;
+        letter-spacing: -0.5px;
+        margin: 56px 0 14px;
+        padding-top: 8px;
+      }
+      h3 {
+        font-size: 18px;
+        margin: 32px 0 10px;
+      }
+      p,
+      li {
+        color: var(--muted);
+      }
+      p strong,
+      li strong {
+        color: var(--text);
+      }
+      ul {
+        padding-left: 20px;
+      }
+      li {
+        margin: 6px 0;
+      }
+      code {
+        font: 0.88em var(--mono);
+        background: var(--panel-2);
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        padding: 1px 5px;
+        color: var(--text);
+      }
+      pre {
+        position: relative;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 14px 16px;
+        overflow-x: auto;
+        margin: 14px 0;
+      }
+      pre code {
+        background: none;
+        border: 0;
+        padding: 0;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      pre .copy {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font: 600 12px var(--sans);
+        color: var(--muted);
+        background: var(--panel-2);
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        padding: 4px 9px;
+        cursor: pointer;
+      }
+      pre .copy:hover {
+        color: var(--text);
+      }
+      .table {
+        overflow-x: auto;
+        margin: 14px 0;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14.5px;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+        color: var(--muted);
+      }
+      th {
+        color: var(--text);
+        font-weight: 600;
+        background: var(--panel);
+      }
+      tr:last-child td {
+        border-bottom: 0;
+      }
+      td strong {
+        color: var(--text);
+      }
+      .callout {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent);
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin: 18px 0;
+      }
+      .callout p {
+        margin: 0;
+      }
+      .callout p + p {
+        margin-top: 8px;
+      }
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 26px 0 40px;
+        color: var(--muted);
+        font-size: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 22px;
+        justify-content: space-between;
+      }
+      footer a {
+        color: var(--muted);
+        margin-right: 18px;
+      }
+      @media (max-width: 860px) {
+        .layout {
+          grid-template-columns: 1fr;
+          gap: 8px;
+        }
+        aside {
+          position: static;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px 14px;
+          padding-bottom: 14px;
+          border-bottom: 1px solid var(--line);
+        }
+        aside p {
+          width: 100%;
+        }
+        .brand em {
+          display: none;
+        }
+        nav a:not(.active) {
+          display: none;
+        }
+        h1 {
+          font-size: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <a class="brand" href="/">kora<span>code</span><em>Docs</em></a>
+        <nav>
+          <a class="active" href="/docs/">Docs</a>
+          <a href="https://github.com/tanzil7890/kcode-releases/releases">Releases</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+        </nav>
+      </header>
+
+      <div class="layout">
+        <aside>
+          <p>On this page</p>
+          <a href="#overview">Overview</a>
+          <a href="#install">Install</a>
+          <a href="#terminal">Best terminal</a>
+          <a href="#usage">Usage</a>
+          <a href="#connect-model">Connect a model</a>
+          <a href="#connect-browser">Connect a browser</a>
+          <a href="#cloud-browsers">Cloud browsers</a>
+          <a href="#watch-live">Watch it live</a>
+          <a href="#workflow-graphs">Workflow graphs</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#configuration">Configuration</a>
+          <a href="#telemetry">Telemetry</a>
+          <a href="#license">License</a>
+        </aside>
+
+        <article>
+          <section id="overview">
+            <h1>KoraCode</h1>
+            <p class="tagline">The browser agent harness.</p>
+            <p>
+              KoraCode is an agent harness for the web: an AI agent that drives real browsers from your terminal or over
+              an API. Instead of a fixed menu of click, type, and scroll actions, the agent writes JavaScript and runs it
+              directly against Chrome through the DevTools Protocol, so it adapts to any site at runtime and saves the
+              scripts it writes to reuse later.
+            </p>
+            <ul>
+              <li>
+                <strong>One browser primitive.</strong> <code>browser_execute(code)</code> evaluates JavaScript
+                in-process against a persistent CDP session. Logs, return values, and screenshots come back to the agent.
+              </li>
+              <li>
+                <strong>Your browser, an isolated browser, or a cloud browser.</strong> Attach to the Chrome you are
+                already logged into, launch a clean profile for unattended work, or let KoraCode start a cloud browser
+                (Anchor, Browserbase, Hyperbrowser, Steel, Kernel) when the machine has none.
+              </li>
+              <li>
+                <strong>Watch it work, live.</strong> The page the agent is driving appears in a browser window next to
+                the chat, and every step reads in plain words. It asks before anything irreversible.
+              </li>
+              <li>
+                <strong>Scripts that compound.</strong> Reusable browser code lives in
+                <code>.kcode/agent-workspace/</code> and is imported back into later runs.
+              </li>
+              <li>
+                <strong>Long-running work.</strong> <a href="#workflow-graphs">Workflow graphs</a> split a long task into
+                steps that survive restarts, wait for you when they must, and replay without AI once they work
+                (experimental).
+              </li>
+              <li>
+                <strong>A full agent harness.</strong> Sessions, sub-agents, permissions, MCP servers, skills, and an HTTP
+                API (<code>kcode serve</code>) for running browser tasks from your own code.
+              </li>
+              <li>
+                <strong>Top models.</strong> Bring an OpenAI, Anthropic, Google Gemini, xAI, OpenRouter, or DeepSeek key
+                and switch with <code>/connect</code>. Any other models.dev provider can be turned on with
+                <code>enabled_providers</code> in <code>kcode.json</code>.
+              </li>
+            </ul>
+          </section>
+
+          <section id="install">
+            <h2>Install</h2>
+            <pre><code>curl -fsSL https://kcode.outhad.com/install | bash</code></pre>
+            <p>
+              This installs the <code>kcode</code> binary to <code>~/.kcode/bin</code> on macOS, Linux, and Windows (Git
+              Bash). Open a new terminal afterwards so <code>kcode</code> is on your <code>PATH</code>. Pin a release
+              with <code>--version</code>:
+            </p>
+            <pre><code>curl -fsSL https://kcode.outhad.com/install | bash -s -- --version 0.3.2</code></pre>
+            <p>
+              Upgrade later with <code>kcode upgrade</code>; remove with <code>kcode uninstall</code>. Release downloads
+              are published to
+              <a href="https://github.com/tanzil7890/kcode-releases/releases">tanzil7890/kcode-releases</a>.
+            </p>
+          </section>
+
+          <section id="terminal">
+            <h2>Best terminal</h2>
+            <div class="callout">
+              <p>
+                <strong>For the best experience, use iTerm2.</strong> KoraCode shows the live browser right next to the
+                chat, and iTerm2 draws it as a sharp picture. On a Mac,
+                <a href="https://iterm2.com/downloads.html">download the stable iTerm2</a>, open it, then install and run
+                KoraCode there.
+              </p>
+            </div>
+            <p>How the live browser looks depends on whether your terminal can draw images:</p>
+            <div class="table">
+              <table>
+                <tr>
+                  <th>Terminal</th>
+                  <th>Live browser view</th>
+                </tr>
+                <tr>
+                  <td><strong>iTerm2</strong> (recommended), WezTerm, Ghostty, kitty</td>
+                  <td>Sharp picture, out of the box</td>
+                </tr>
+                <tr>
+                  <td><strong>VS Code</strong> terminal</td>
+                  <td>Sharp picture once images are on (see below)</td>
+                </tr>
+                <tr>
+                  <td><strong>macOS Terminal</strong></td>
+                  <td>Lower-resolution block preview; Terminal cannot draw images</td>
+                </tr>
+                <tr>
+                  <td>Inside tmux or screen</td>
+                  <td>Block preview; multiplexers drop images</td>
+                </tr>
+              </table>
+            </div>
+            <p>In VS Code, add these to your user settings, then reload the window:</p>
+            <pre><code>"terminal.integrated.enableImages": true,
+"terminal.integrated.gpuAcceleration": "auto"</code></pre>
+          </section>
+
+          <section id="usage">
+            <h2>Usage</h2>
+            <p>Open the TUI in the current project:</p>
+            <pre><code>kcode</code></pre>
+            <p>Run a task headlessly and print the result:</p>
+            <pre><code>kcode run "On Google Flights, return every flight from New York to SF tomorrow"</code></pre>
+            <p>Other entry points:</p>
+            <pre><code>kcode &lt;directory&gt;            # open the TUI in another project
+kcode serve                  # headless API server
+kcode attach &lt;url&gt;           # attach a TUI to a running server
+kcode models                 # list available models
+kcode mcp                    # manage MCP servers
+kcode session                # inspect and manage sessions</code></pre>
+            <p>A serve-only build, <code>kcode-serve</code>, is available for headless containers.</p>
+          </section>
+
+          <section id="connect-model">
+            <h2>Connect a model</h2>
+            <p>
+              Run <code>/connect</code> inside the TUI to add an <strong>OpenAI, Anthropic, Google Gemini, xAI,
+              OpenRouter, or DeepSeek</strong> key, or set the provider's API key in your environment. OpenRouter reaches
+              most other models with one key.
+            </p>
+            <p>
+              To use any other provider from models.dev, list the providers you want in <code>kcode.json</code>. The list
+              replaces the defaults, so include every provider you use:
+            </p>
+            <pre><code>{
+  "enabled_providers": ["openai", "anthropic", "groq"]
+}</code></pre>
+            <p>Providers you already use, through a saved key or a configured model, keep working.</p>
+          </section>
+
+          <section id="connect-browser">
+            <h2>Connect a browser</h2>
+            <p>You can just ask; the agent knows how to connect. For example:</p>
+            <pre><code>Connect to my current tab on amazon.com and find deals on 64GB DDR5 RAM; return the URLs</code></pre>
+            <p>The agent attaches to your running Chrome and works in your real profile.</p>
+            <pre><code>Make a new browser profile, QA-test http://localhost:3000, and report every bug with a screenshot</code></pre>
+            <p>The agent launches an isolated Chrome with its own profile.</p>
+            <pre><code>Using the remote browser, extract every item sold on mcdonalds.com in SF</code></pre>
+            <p>
+              With a cloud browser selected (see <a href="#cloud-browsers">Cloud browsers</a>), KoraCode starts one for
+              the session and the agent works there; nothing runs on your machine.
+            </p>
+            <p>Under the hood these are the connection modes of <code>browser_execute</code>:</p>
+            <div class="table">
+              <table>
+                <tr>
+                  <th>Mode</th>
+                  <th>When</th>
+                  <th>How</th>
+                </tr>
+                <tr>
+                  <td><strong>Your running Chrome</strong></td>
+                  <td>Tasks that need your logged-in sites, cookies, and current tabs</td>
+                  <td>
+                    Turn on <em>Allow remote debugging</em> at <code>chrome://inspect/#remote-debugging</code>, then
+                    approve the connection popup
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Isolated Chrome</strong></td>
+                  <td>Unattended automation, clean state</td>
+                  <td>
+                    Chrome launched with <code>--remote-debugging-port</code> and a dedicated
+                    <code>--user-data-dir</code> (for example <code>./.kcode/chrome-data-dir</code>)
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Cloud browser</strong></td>
+                  <td>No local browser, or background work</td>
+                  <td>
+                    <code>/browser</code> in the TUI or <code>kcode browser use &lt;provider&gt;</code>; KoraCode starts,
+                    connects, and stops the browser
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Custom endpoint</strong></td>
+                  <td>A browser you host yourself</td>
+                  <td>
+                    <code>kcode browser use custom --cdp-url wss://…</code>, or set <code>KCODE_CDP_WS</code> (alias
+                    <code>KCODE_CDP_URL</code>), which overrides every other setting
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </section>
+
+          <section id="cloud-browsers">
+            <h2>Cloud browsers</h2>
+            <p>Pick a provider and save its API key once, either with <code>/browser</code> in the TUI or from the shell:</p>
+            <pre><code>kcode browser login anchor   # prompts for the key; stored in auth.json
+kcode browser use anchor     # sets browser.provider in the global config
+kcode browser test           # starts a browser, checks CDP, stops it (may be billed)
+kcode browser status         # what browser_execute uses here, and what is running</code></pre>
+            <p>
+              From then on, the first browser task in a session starts a cloud browser and the browser panel shows it
+              live. KoraCode stops the browser after 5 minutes idle, after 1 hour, when the session is deleted, or when
+              KoraCode exits; provider-side timeouts are always set as a backstop. API keys and the CDP URLs of cloud
+              browsers never reach the model or the logs, and <code>/browser</code> endpoints report where a key comes
+              from, never the key itself.
+            </p>
+            <div class="table">
+              <table>
+                <tr>
+                  <th>Provider</th>
+                  <th><code>browser.provider</code></th>
+                  <th>Env fallback for the key</th>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.anchorbrowser.io">Anchor</a></td>
+                  <td><code>anchor</code></td>
+                  <td><code>ANCHOR_API_KEY</code></td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.browserbase.com">Browserbase</a></td>
+                  <td><code>browserbase</code></td>
+                  <td><code>BROWSERBASE_API_KEY</code></td>
+                </tr>
+                <tr>
+                  <td><a href="https://www.hyperbrowser.ai/docs">Hyperbrowser</a></td>
+                  <td><code>hyperbrowser</code></td>
+                  <td><code>HYPERBROWSER_API_KEY</code></td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.steel.dev">Steel</a></td>
+                  <td><code>steel</code></td>
+                  <td><code>STEEL_API_KEY</code></td>
+                </tr>
+                <tr>
+                  <td><a href="https://www.kernel.sh/docs">Kernel</a></td>
+                  <td><code>kernel</code></td>
+                  <td><code>KERNEL_API_KEY</code></td>
+                </tr>
+              </table>
+            </div>
+            <p>
+              Prefer saved keys over environment variables. KoraCode never passes a saved key to the model or to
+              snippets, while an environment variable is visible to any snippet through <code>process.env</code>.
+            </p>
+            <p>Tune it in <code>kcode.json</code> (a project file overrides the global one):</p>
+            <pre><code>{
+  "browser": {
+    "provider": "anchor",
+    "idle_timeout": 300, // seconds idle before stopping; 0 = never on idle
+    "max_duration": 3600, // hard cap per browser, seconds
+    "options": { "proxy": true, "captcha": true, "stealth": false, "region": "us-east" },
+  },
+}</code></pre>
+            <p><code>provider_options</code> passes raw fields to the provider's create-session request.</p>
+          </section>
+
+          <section id="watch-live">
+            <h2>Watch it live</h2>
+            <p>
+              When a session uses a browser and your terminal is at least 140 columns wide, a browser panel opens next to
+              the chat. It shows the page the agent is driving inside a browser window, with the page title, the URL, and
+              the latest steps, and it follows the agent from tab to tab. How sharp it looks depends on your terminal;
+              see <a href="#terminal">Best terminal</a>.
+            </p>
+            <div class="table">
+              <table>
+                <tr>
+                  <th>Key or command</th>
+                  <th>What it does</th>
+                </tr>
+                <tr>
+                  <td><code>ctrl+x</code> then <code>v</code>, or <code>/browser-panel</code></td>
+                  <td>Switch between the browser panel and the sidebar</td>
+                </tr>
+                <tr>
+                  <td><code>/browser-view</code></td>
+                  <td>Cycle the picture between auto, sharp, and blocks</td>
+                </tr>
+                <tr>
+                  <td><code>ctrl+x</code> then <code>o</code>, or <code>/live</code></td>
+                  <td>Open the cloud browser's own live view in your web browser</td>
+                </tr>
+                <tr>
+                  <td><code>ctrl+x</code> then <code>i</code>, or <code>/screenshot</code></td>
+                  <td>Open the latest screenshot the agent took</td>
+                </tr>
+                <tr>
+                  <td><code>/browser-stop</code></td>
+                  <td>Stop this session's cloud browser right away</td>
+                </tr>
+              </table>
+            </div>
+          </section>
+
+          <section id="workflow-graphs">
+            <h2>Workflow graphs</h2>
+            <div class="callout">
+              <p>
+                <strong>Experimental.</strong> Turn graphs on with <code>KCODE_EXPERIMENTAL_GRAPHS=1</code>. Their commands
+                work but are not listed in <code>kcode --help</code> yet.
+              </p>
+            </div>
+            <p>
+              Some browser work is too long for one conversation: hundreds of invoices, a nightly report, a portal that
+              asks you to log in halfway through. A workflow graph splits that work into steps connected like a
+              flowchart. Each step runs as its own short agent session in one shared browser, so the context stays small
+              however long the run is, and each step's outcome is saved as it finishes. After a crash, a restart, or a
+              closed laptop, the run picks up at the step it stopped on without repeating the steps before it.
+            </p>
+            <pre><code>export KCODE_EXPERIMENTAL_GRAPHS=1   # add it to your shell profile to keep graphs on</code></pre>
+
+            <h3>Build a graph</h3>
+            <p>There are three ways, and all of them write the same file:</p>
+            <ul>
+              <li>
+                <strong>On a canvas.</strong> <code>kcode studio</code> opens a node editor in your browser: add steps,
+                drag connections between them, and see problems as you edit. <strong>Save</strong> writes the file, and
+                the <strong>Runs</strong> and <strong>Schedules</strong> tabs follow it from there.
+              </li>
+              <li>
+                <strong>By asking.</strong> Do a task with the agent, then ask it to make that a graph; the steps it took
+                become a graph whose steps already have scripts. Or type <code>/new-graph</code> and describe what the
+                graph should do.
+              </li>
+              <li>
+                <strong>By hand.</strong> A graph is a JSON file at
+                <code>.kcode/agent-workspace/graphs/&lt;name&gt;.json</code>, with optional rules every step follows in
+                <code>&lt;name&gt;.rules.md</code>. Check it with <code>kcode graph validate &lt;name&gt;</code>.
+              </li>
+            </ul>
+            <div class="table">
+              <table>
+                <tr>
+                  <th>Node</th>
+                  <th>What it does</th>
+                </tr>
+                <tr>
+                  <td><strong>Agent step</strong> (<code>agent</code>)</td>
+                  <td>An agent does one job in the browser and reports what it found</td>
+                </tr>
+                <tr>
+                  <td><strong>Loop</strong> (<code>loop</code>)</td>
+                  <td>Runs a step once for each item of a list, such as the previous step's answer</td>
+                </tr>
+                <tr>
+                  <td><strong>Check</strong> (<code>condition</code>)</td>
+                  <td>Reads the page (the URL, some text, or an element) and goes on by true or false, without AI</td>
+                </tr>
+                <tr>
+                  <td><strong>Subgraph</strong> (<code>subworkflow</code>)</td>
+                  <td>Runs another graph</td>
+                </tr>
+                <tr>
+                  <td><strong>Output</strong> (<code>output</code>)</td>
+                  <td>Ends the run with a result</td>
+                </tr>
+                <tr>
+                  <td><strong>Success</strong>, <strong>Failure</strong> (<code>success</code>, <code>error</code>)</td>
+                  <td>End the run as done, or as failed</td>
+                </tr>
+              </table>
+            </div>
+            <p>
+              A step leads on by <code>success</code> or <code>error</code>, a check by <code>true</code> or
+              <code>false</code>, and an agent step can instead choose between labeled paths (<code>ai</code>). Every node
+              has a <code>position</code> on the canvas. This graph reads every invoice on a portal and decides whether any
+              is overdue:
+            </p>
+            <pre><code>{
+  "version": 3,
+  "name": "invoices",
+  "entry": "list",
+  "variables": [{ "name": "PORTAL_URL", "required": true }],
+  "nodes": [
+    {
+      "id": "list", "type": "agent", "name": "List the invoices",
+      "instruction": "List the invoice numbers on {{.PORTAL_URL}}/invoices.",
+      "position": { "x": 0, "y": 0 }
+    },
+    {
+      "id": "each", "type": "loop", "name": "Read each invoice",
+      "items_variable": "PREV_OUTPUT", "max_iterations": 50,
+      "item_instruction": "Open invoice {{.ITEM}} and read its status and total.",
+      "position": { "x": 260, "y": 0 }
+    },
+    {
+      "id": "decide", "type": "agent", "name": "Decide",
+      "instruction": "Is any of these invoices overdue? {{.NODE_EACH_OUTPUT}}",
+      "position": { "x": 520, "y": 0 }
+    },
+    {
+      "id": "overdue", "type": "output", "name": "overdue",
+      "output_binding": { "from": "previous" }, "position": { "x": 780, "y": -80 }
+    },
+    {
+      "id": "all_paid", "type": "output", "name": "all_paid",
+      "output_binding": { "from": "previous" }, "position": { "x": 780, "y": 80 }
+    },
+    { "id": "failed", "type": "error", "position": { "x": 520, "y": 200 } }
+  ],
+  "edges": [
+    { "id": "list_ok", "from": "list", "to": "each", "when": "success" },
+    { "id": "list_failed", "from": "list", "to": "failed", "when": "error" },
+    { "id": "each_ok", "from": "each", "to": "decide", "when": "success" },
+    { "id": "each_failed", "from": "each", "to": "failed", "when": "error" },
+    { "id": "late", "from": "decide", "to": "overdue", "when": "ai", "label": "Overdue" },
+    { "id": "paid", "from": "decide", "to": "all_paid", "when": "ai", "label": "All paid" },
+    {
+      "id": "unread", "from": "decide", "to": "failed", "when": "ai",
+      "label": "The invoices cannot be read", "outcome_role": "failure"
+    }
+  ]
+}</code></pre>
+
+            <h3>Run it</h3>
+            <pre><code>kcode graph list
+kcode graph run invoices --input PORTAL_URL=https://portal.example.com
+kcode graph runs              # this project's runs, newest first
+kcode graph status &lt;run-id&gt;   # its steps, what it waits for, the result
+kcode graph pause|resume|cancel &lt;run-id&gt;</code></pre>
+            <p>
+              <code>kcode graph run</code> follows the run until it ends, and exits with code 2 when the run is waiting for
+              you. <code>--detach</code> starts it and returns, and whichever KoraCode is open for the project carries it
+              on. In the TUI, <code>/graphs</code> lists graphs and runs, and each step opens the session that did it.
+            </p>
+
+            <h3>When a run needs you</h3>
+            <p>
+              A step that reaches a login, a captcha, or a decision pauses the run and says what it needs. The run waits,
+              and goes on when you answer:
+            </p>
+            <pre><code>kcode graph reply &lt;run-id&gt; "Logged in"   # answer a step's question
+kcode graph confirm &lt;run-id&gt; --yes       # approve what it is waiting to do (--no declines)</code></pre>
+            <p>
+              You can also answer from <code>/graphs</code> or the studio. A secret input names a saved site secret
+              (<code>NAME=SITE.KEY</code>) instead of carrying its value.
+            </p>
+
+            <h3>Cheaper every run</h3>
+            <p>
+              When the agent finishes a step that only acts on the page (no later step reads its answer), KoraCode saves
+              what it did as a script next to the graph. The next run replays that script without calling the model. If
+              the site changed and the replay fails, the agent does the step instead and the script is rewritten from what
+              it did. Turn this off with <code>"capture_scripts": false</code>.
+            </p>
+
+            <h3>Schedules, batches, and the background runner</h3>
+            <pre><code>kcode graph publish invoices             # pin this version for schedules
+kcode graph schedule add invoices --cron "0 9 * * 1-5" --tz America/New_York \
+  --input PORTAL_URL=https://portal.example.com
+kcode graph schedule list
+kcode graph batch invoices portals.csv   # one run per row; the header names the inputs
+kcode daemon start                       # keeps runs and schedules going in the background</code></pre>
+            <p>
+              A schedule runs the published version in whichever KoraCode process is open for the project.
+              <code>kcode daemon start</code> keeps one open in the background, and <code>kcode studio</code> uses it when
+              it runs. A schedule skips a fire while its last run is still going unless you pass
+              <code>--overlap queue</code>, and <code>--catch-up one</code> makes up one fire missed while nothing was open.
+            </p>
+
+            <h3>Settings</h3>
+            <p>In <code>kcode.json</code>:</p>
+            <pre><code>{
+  "graphs": {
+    "models": { "fast": "openai/gpt-5-mini" }, // aliases a step can name
+    "max_concurrent_runs": 1, // runs at once; the rest wait their turn
+    "max_node_steps": 50, // turns one step may take
+    "max_run_cost": 5, // cancel a run once it has cost more, in US dollars
+    "desktop_notifications": true, // when a run waits for you or ends
+    "notifications": [
+      { "url": "https://example.com/hooks/kcode", "secret_env": "KCODE_WEBHOOK_SECRET" },
+    ],
+    "retention_days": 30, // how long finished runs keep their step details
+  },
+}</code></pre>
+            <p>
+              Webhooks are signed with HMAC-SHA256: <code>X-Kcode-Signature: t=&lt;unix&gt;,v1=&lt;hex&gt;</code> over
+              <code>&lt;t&gt;.&lt;body&gt;</code>. One local Chrome runs one graph at a time; a cloud browser provider gives
+              each run its own browser, so <code>max_concurrent_runs</code> can go higher.
+            </p>
+            <p>
+              Graphs are also on the HTTP API of <code>kcode serve</code> (<code>/graph</code>, <code>/graph-run</code>,
+              <code>/graph-schedule</code>, <code>/graph-batch</code>) and in the SDK as <code>client.graph</code>.
+            </p>
+          </section>
+
+          <section id="how-it-works">
+            <h2>How it works</h2>
+            <p>
+              KoraCode treats browser automation as code: instead of fixed click and type actions, the agent writes
+              JavaScript against a live browser session.
+            </p>
+            <pre><code>browser_execute(code)
+  -&gt; runs the JavaScript in-process
+  -&gt; talks to Chrome through the DevTools Protocol
+  -&gt; keeps the browser session alive across calls
+  -&gt; returns logs, values, and screenshots to the agent</code></pre>
+            <p>
+              There are no helper abstractions between the agent and the browser, just a live <code>session</code>,
+              <code>console</code>, and standard JavaScript. The agent writes plain <code>.ts</code> files under
+              <code>&lt;project&gt;/.kcode/agent-workspace/</code> and imports them back into later snippets, so a
+              five-line wrapper and a five-hundred-line scraper are handled the same way.
+            </p>
+          </section>
+
+          <section id="configuration">
+            <h2>Configuration</h2>
+            <p>
+              KoraCode reads <code>kcode.json</code> or <code>kcode.jsonc</code> from your project's <code>.kcode/</code>
+              directory, from <code>~/.kcode/</code>, and from the global config directory. Project configuration is
+              discovered by walking up from the current directory. Add a schema for autocomplete in your editor:
+            </p>
+            <pre><code>{
+  "$schema": "https://kcode.outhad.com/config.json"
+}</code></pre>
+          </section>
+
+          <section id="telemetry">
+            <h2>Telemetry</h2>
+            <p>
+              Telemetry is off unless you turn it on. Set <code>KCODE_TELEMETRY=1</code> to send anonymous traces (timing
+              and errors) that help improve KoraCode. They never include prompts, model output, page content, snippet
+              code, screenshots, or your username. <code>DO_NOT_TRACK=1</code> always turns telemetry off.
+            </p>
+            <p>
+              Your own trace backend (<code>LMNR_PROJECT_API_KEY</code> or <code>OTEL_EXPORTER_OTLP_ENDPOINT</code>)
+              records full content; set <code>KCODE_TELEMETRY_CONTENT=0</code> to keep content out of it too.
+            </p>
+          </section>
+
+          <section id="license">
+            <h2>License</h2>
+            <p>MIT; see <a href="https://github.com/tanzil7890/kcode-releases/blob/main/LICENSE">LICENSE</a>.</p>
+          </section>
+        </article>
+      </div>
+
+      <footer>
+        <div>
+          <a href="/">Home</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a href="https://github.com/tanzil7890/kcode-releases/releases">Releases</a>
+          <a href="/config.json">config.json schema</a>
+        </div>
+        <div>KoraCode · MIT License</div>
+      </footer>
+    </div>
+
+    <script>
+      // A copy button on every code block.
+      for (const pre of document.querySelectorAll("pre")) {
+        const button = document.createElement("button")
+        button.className = "copy"
+        button.type = "button"
+        button.textContent = "Copy"
+        button.addEventListener("click", async () => {
+          await navigator.clipboard.writeText(pre.querySelector("code").textContent)
+          button.textContent = "Copied"
+          setTimeout(() => (button.textContent = "Copy"), 1500)
+        })
+        pre.appendChild(button)
+      }
+    </script>
+  </body>
+</html>
