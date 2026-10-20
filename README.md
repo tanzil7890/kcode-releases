@@ -102,7 +102,7 @@ page.
 **Pin a version, upgrade, or remove:**
 
 ```sh
-curl -fsSL https://kcode.outhad.com/install | bash -s -- --version 0.3.4
+curl -fsSL https://kcode.outhad.com/install | bash -s -- --version 0.3.16
 kcode upgrade
 kcode uninstall
 ```
