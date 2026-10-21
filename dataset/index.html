@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KoraCode Dataset</title>
+    <meta
+      name="description"
+      content="A catalogue of data for training and testing computer-use agents: healthcare admin, Adobe Photoshop, and Unity, each with environments, trajectories, human feedback, and evals."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kcode.outhad.com/dataset/" />
+    <meta property="og:title" content="KoraCode Dataset" />
+    <meta
+      property="og:description"
+      content="Data for computer-use agents, recorded from real work in healthcare admin, Adobe Photoshop, and Unity."
+    />
+    <meta name="theme-color" content="#0c0c0e" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0c0e'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23fab283'%3Ek%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preload" href="/fonts/martian-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/site.css" />
+    <link rel="stylesheet" href="/dataset/dataset.css" />
+    <script src="/site.js" defer></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a class="brand" href="/">kora<span>code</span><em>dataset</em></a>
+        <nav>
+          <a href="/docs/studio/">Studio</a>
+          <a href="/docs/">Docs</a>
+          <a href="/papers/">Papers</a>
+          <a class="keep" href="/dataset/" aria-current="page">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a class="ver keep" data-version href="https://github.com/tanzil7890/kcode-releases/releases/latest">v0.4.0</a>
+        </nav>
+      </header>
+
+      <main class="page wide">
+        <p class="eyebrow">Data</p>
+        <h1>Dataset</h1>
+        <p class="lead">
+          A catalogue of data for training and testing computer-use agents, recorded from real work in live software.
+          Open a dataset for the full detail, or contact us for a specific type.
+        </p>
+
+        <ul class="catalogue">
+          <li>
+            <article class="card">
+              <div class="title-row">
+                <h2><a href="/dataset/healthcare-admin/">Healthcare admin</a></h2>
+                <span class="pill">Available</span>
+              </div>
+              <p>Clinic work in EHRs, payer portals, and fax inboxes, signed off by clinic staff.</p>
+              <p class="covers">Referrals · Prior authorization · Denial appeals · Eligibility · Fax triage · Scheduling</p>
+              <p class="label">Types</p>
+              <ul class="chips">
+                <li>Environments</li>
+                <li>Trajectories</li>
+                <li>Human feedback</li>
+                <li>Evals</li>
+              </ul>
+              <div class="actions">
+                <a class="link" href="/dataset/healthcare-admin/">View dataset →</a>
+                <a class="link" href="mailto:info@outhad.com?subject=Healthcare%20admin%20dataset">Contact us</a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <div class="title-row">
+                <h2><a href="/dataset/photoshop/">Adobe Photoshop</a></h2>
+                <span class="pill">Available</span>
+              </div>
+              <p>Image editing in Photoshop, from the first selection to the exported file, approved by designers.</p>
+              <p class="covers">Retouching · Masking · Compositing · Color grading · Text and layout · Batch export</p>
+              <p class="label">Types</p>
+              <ul class="chips">
+                <li>Environments</li>
+                <li>Trajectories</li>
+                <li>Human feedback</li>
+                <li>Evals</li>
+              </ul>
+              <div class="actions">
+                <a class="link" href="/dataset/photoshop/">View dataset →</a>
+                <a class="link" href="mailto:info@outhad.com?subject=Adobe%20Photoshop%20dataset">Contact us</a>
+              </div>
+            </article>
+          </li>
+          <li>
+            <article class="card">
+              <div class="title-row">
+                <h2><a href="/dataset/unity/">Unity</a></h2>
+                <span class="pill">Available</span>
+              </div>
+              <p>Game and 3D work in the Unity editor, from scene setup to a clean build, reviewed by developers.</p>
+              <p class="covers">Scenes · Prefabs · C# scripting · Lighting · Animation · Builds</p>
+              <p class="label">Types</p>
+              <ul class="chips">
+                <li>Environments</li>
+                <li>Trajectories</li>
+                <li>Human feedback</li>
+                <li>Evals</li>
+              </ul>
+              <div class="actions">
+                <a class="link" href="/dataset/unity/">View dataset →</a>
+                <a class="link" href="mailto:info@outhad.com?subject=Unity%20dataset">Contact us</a>
+              </div>
+            </article>
+          </li>
+        </ul>
+
+        <section class="block" aria-labelledby="types-title">
+          <h2 id="types-title">Types of data</h2>
+          <p class="intro">Each dataset comes in some or all of these types.</p>
+          <dl class="legend">
+            <div>
+              <dt>Environments</dt>
+              <dd>The software, simulated, with tasks and a grader for each. For reinforcement learning.</dd>
+            </div>
+            <div>
+              <dt>Trajectories</dt>
+              <dd>Recorded runs, step by step: each screen, each action, and why. For fine-tuning.</dd>
+            </div>
+            <div>
+              <dt>Human feedback</dt>
+              <dd>What reviewers approved, changed, or sent back, and why. For preference training.</dd>
+            </div>
+            <div>
+              <dt>Evals</dt>
+              <dd>Private task sets, never published. You send a model; we send back scores.</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title">Need something specific?</h2>
+          <p>
+            Tell us the software, the type of data, and how much you need. We can also record a workflow that isn't
+            listed here.
+          </p>
+          <div class="actions">
+            <a class="button" href="mailto:info@outhad.com?subject=Dataset%20request">Contact us</a>
+            <a class="link" href="mailto:info@outhad.com">info@outhad.com</a>
+          </div>
+        </section>
+
+        <p class="marks">
+          Adobe and Photoshop are trademarks of Adobe. Unity is a trademark of Unity Technologies. KoraCode is not
+          affiliated with either.
+        </p>
+      </main>
+
+      <footer>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/docs/">Docs</a>
+          <a href="/docs/studio/">Studio guide</a>
+          <a href="/papers/">Papers</a>
+          <a href="/dataset/">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a href="https://github.com/tanzil7890/kcode-releases/releases">Releases</a>
+        </nav>
+        <span>KoraCode · MIT License</span>
+      </footer>
+    </div>
+  </body>
+</html>

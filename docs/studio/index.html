@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KoraCode Studio</title>
+    <meta
+      name="description"
+      content="A guide to KoraCode Studio: build workflow graphs on a canvas or by chatting with the agent, watch runs live, have failing runs fixed, and script steps until they run without AI."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kcode.outhad.com/docs/studio/" />
+    <meta property="og:title" content="KoraCode Studio" />
+    <meta
+      property="og:description"
+      content="Build browser workflow graphs by talking to an agent, watch them run, and script them until they need no AI."
+    />
+    <meta name="theme-color" content="#0c0c0e" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0c0e'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23fab283'%3Ek%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preload" href="/fonts/martian-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/site.css" />
+    <link rel="stylesheet" href="/docs/docs.css" />
+    <script src="/site.js" defer></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a class="brand" href="/">kora<span>code</span><em>studio guide</em></a>
+        <nav>
+          <a class="keep" href="/docs/studio/" aria-current="page">Studio</a>
+          <a href="/docs/">Docs</a>
+          <a href="/papers/">Papers</a>
+          <a href="/dataset/">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a class="ver keep" data-version href="https://github.com/tanzil7890/kcode-releases/releases/latest">v0.4.0</a>
+        </nav>
+      </header>
+
+      <div class="layout">
+        <aside class="toc">
+          <p>On this page</p>
+          <nav>
+            <a href="#overview">Overview</a>
+            <a href="#open">Open the studio</a>
+            <a href="#layout">Find your way</a>
+            <a href="#build">Build a graph</a>
+            <a href="#chat">Work through the chat</a>
+            <a href="#script">Script a step</a>
+            <a href="#runs">Runs</a>
+            <a href="#schedules">Schedules</a>
+            <a href="#chats">Projects and chats</a>
+            <a href="#shortcuts">Shortcuts</a>
+          </nav>
+        </aside>
+
+        <article>
+          <section id="overview">
+            <h1>Studio</h1>
+            <p class="tagline">Build, run, and script workflow graphs in your browser, with the agent beside you.</p>
+            <p>
+              The studio is where <a href="/docs/#workflow-graphs">workflow graphs</a> are easiest to work with. The
+              graph sits on a canvas, the agent sits in a chat beside it, and every run plays out live. Describe a job
+              and the agent builds the graph; select a step and ask for a change; run it and watch each step go. The chat
+              is the terminal's agent with the same tools, so whatever you can do in <code>kcode</code>, you can do here.
+            </p>
+            <figure class="shot">
+              <picture>
+                <source srcset="/img/studio/build-light.webp" media="(prefers-color-scheme: light)" />
+                <img
+                  src="/img/studio/build-dark.webp"
+                  width="1600"
+                  height="913"
+                  alt="The Workflows screen: a graph of browser steps on a canvas, the selected step open in a panel, and the chat beside it"
+                />
+              </picture>
+              <figcaption>The Workflows screen, with a step selected and the chat that scripted it.</figcaption>
+            </figure>
+            <div class="callout">
+              <p>
+                <strong>Experimental.</strong> Workflow graphs (the Workflows, Runs, and Schedules screens) are turned
+                on with <code>KCODE_EXPERIMENTAL_GRAPHS=1</code>. Setup and the Tasks screen work without it.
+              </p>
+            </div>
+          </section>
+
+          <section id="open">
+            <h2>Open the studio</h2>
+            <pre><code># add the first line to your shell profile to keep graphs on
+export KCODE_EXPERIMENTAL_GRAPHS=1
+kcode</code></pre>
+            <p>
+              Run <code>kcode</code> (or <code>kcode studio</code>) in your project's folder. It opens the studio in your
+              browser for that project, on the background server (<code>kcode daemon</code>), which it starts when it
+              is not running. Runs and schedules carry on after you close the tab and the terminal; <code>kcode daemon
+              stop</code> ends it. <code>kcode studio --foreground</code> keeps a server in the terminal instead, until
+              Ctrl-C. <code>--no-open</code> prints the address instead of opening it. To turn graphs on when the
+              background server already runs, run <code>kcode daemon stop</code> first.
+            </p>
+            <p>
+              The first time, the studio opens on <strong>setup</strong>: connect a model (a ChatGPT or SuperGrok
+              sign-in, or an API key), pick the browser (KoraCode's own Chrome window, your Chrome, or a cloud
+              browser), and give it a first task. The connection button in the top bar shows the model and the browser,
+              and opens them again, with your site secrets.
+            </p>
+            <p>
+              The link the command opens carries the server's password, so open the studio from the command rather than
+              typing the address. A tab without it says it has no access to the server.
+            </p>
+          </section>
+
+          <section id="layout">
+            <h2>Find your way</h2>
+            <p>One quiet bar runs across the top. From left to right:</p>
+            <ul>
+              <li>
+                <strong>Project / graph.</strong> The project's name opens the list of your
+                <a href="#chats">projects and chats</a>. The graph's name is a menu: switch graphs, start a
+                <strong>New graph…</strong>, open <strong>Graph settings…</strong>, or <strong>Reload from disk</strong>.
+              </li>
+              <li>
+                <strong>Tasks, Workflows, Runs, Schedules.</strong> The screens. On <strong>Tasks</strong> you give the
+                browser a job and watch it work beside the conversation; the others build and run workflow graphs. The
+                graph you are on stays selected as you move between them, and every screen, graph, and run has its own
+                address you can bookmark or share.
+              </li>
+              <li>
+                <strong>Save and Run.</strong> On Workflows, <strong>Saved</strong> turns into a <strong>Save</strong> button
+                when the canvas has edits, and <strong>Run</strong> starts a run.
+              </li>
+              <li>
+                <strong>Theme and chat.</strong> The sun and moon button switches between the dark and light themes, and
+                the last button shows or hides the chat. The studio remembers both.
+              </li>
+            </ul>
+          </section>
+
+          <section id="build">
+            <h2>Build a graph</h2>
+            <p>
+              The canvas fills the screen. Each step is a card with its kind, its name, and one line of what it does;
+              agent steps also say whether they run with <strong>AI</strong> or replay a <strong>Script</strong>. The
+              first step carries a <strong>Start</strong> tag. Drag cards to move them, and drag the empty canvas to pan.
+            </p>
+
+            <h3 id="toolbar">The toolbar</h3>
+            <p>The toolbar floats at the bottom of the canvas:</p>
+            <div class="table">
+              <table>
+                <tr>
+                  <th>Button</th>
+                  <th>What it does</th>
+                </tr>
+                <tr>
+                  <td><strong>+ Step</strong></td>
+                  <td>Adds an agent step: an agent does one job in the browser</td>
+                </tr>
+                <tr>
+                  <td><strong>Check</strong></td>
+                  <td>Reads the page (the URL, some text, or an element) and goes on by true or false, without AI</td>
+                </tr>
+                <tr>
+                  <td><strong>Loop</strong></td>
+                  <td>Runs a step once for each item of a list</td>
+                </tr>
+                <tr>
+                  <td><strong>Output</strong></td>
+                  <td>Ends the run with a result</td>
+                </tr>
+                <tr>
+                  <td><strong>⋯</strong></td>
+                  <td>More kinds: a <strong>Subgraph</strong> runs another graph, a <strong>Success end</strong> or <strong>Failure end</strong> ends the run</td>
+                </tr>
+                <tr>
+                  <td><strong>Tidy</strong>, <strong>Undo</strong>, <strong>Redo</strong></td>
+                  <td>Lay the graph out from left to right, and step back and forward through your edits</td>
+                </tr>
+                <tr>
+                  <td><strong>−</strong>, <strong>Fit</strong>, <strong>+</strong></td>
+                  <td>Zoom out, fit the whole graph on screen, zoom in</td>
+                </tr>
+              </table>
+            </div>
+            <p>
+              New steps land in a free spot near the middle of the view. To connect two steps, drag from a step's ● to
+              another step, or use <strong>Connect to…</strong> in the step's panel.
+            </p>
+
+            <h3 id="step-panel">The step panel</h3>
+            <p>
+              Select a step and a panel slides in on the right. Its name is at the top, with
+              <strong>Ask the chat</strong> (open the chat about this step), <strong>Start here</strong> (make it the
+              first step), and <strong>Delete</strong>. Below that, depending on the kind of step:
+            </p>
+            <ul>
+              <li>
+                <strong>Agent step:</strong> the <strong>Instruction</strong>, and a card that says whether the step runs
+                with AI or replays a script, with <strong>Script this step with kcode</strong> (see
+                <a href="#script">Script a step</a>).
+              </li>
+              <li><strong>Check:</strong> what to read (the URL, text on the page, or a CSS selector) and the value.</li>
+              <li>
+                <strong>Loop:</strong> the list to go through (such as <code>PREV_OUTPUT</code>, the previous step's
+                answer), what to do with each item, and the most items to handle.
+              </li>
+              <li><strong>Subgraph:</strong> the graph to run.</li>
+            </ul>
+            <p>
+              <strong>Next</strong> lists the paths out of the step and where each one leads; select one to edit it.
+              <strong>More settings</strong> holds the step's model (blank uses the run's model), a time limit, and
+              <strong>Ask a person first</strong>, which pauses the run for an approval or an answer before the step
+              starts.
+            </p>
+
+            <h3 id="paths">Paths</h3>
+            <p>
+              Select a path, on the canvas or in a step's <strong>Next</strong> list, to choose when it is taken: when the
+              step succeeds or fails, when a check is true or false, or when the agent chooses it. For a path the agent
+              chooses, describe when it should choose it, such as "Overdue". Tick
+              <strong>This path means the run failed</strong> for a path that ends the run as a failure.
+            </p>
+
+            <h3 id="saving">Problems, saving, and undo</h3>
+            <p>
+              The studio checks the graph as you edit. A pill at the top of the canvas says <strong>Valid</strong>, with
+              how many steps run without AI, or how many problems it found; click it to see each one and jump to its
+              step. A graph with problems can't run until they are fixed.
+              <strong>Save</strong> (⌘S) writes the graph to
+              <code>.kcode/agent-workspace/graphs/&lt;name&gt;.json</code>, and ⌘Z and ⇧⌘Z undo and redo every canvas
+              edit. When the chat's agent or another editor changes the file, the canvas updates with the changed steps
+              highlighted, and <strong>Undo</strong> in the notice puts back the last change.
+            </p>
+            <p>
+              <strong>Graph settings</strong>, in the graph menu, holds the run's time limit and the
+              <strong>inputs</strong> a run asks for. Use an input in an instruction as <code>{{.NAME}}</code>, or a saved
+              site secret as <code>##NAME##</code>.
+            </p>
+          </section>
+
+          <section id="chat">
+            <h2>Work through the chat</h2>
+            <p>
+              The chat beside every screen is the terminal's agent with the same tools. It knows what you are looking
+              at, and a chip above the message box shows what it will read with your message: the selected step or path,
+              or the open run. Click the chip's × to leave it out.
+            </p>
+            <div class="split">
+              <div>
+                <ul>
+                  <li>
+                    <strong>Describe a job.</strong> The agent looks at the site, lists the steps it plans, and builds the
+                    graph once you agree. <code>/new-graph</code> skips the plan and builds straight away.
+                  </li>
+                  <li>
+                    <strong>Change a step.</strong> With a step selected, "this step" means that step: ask the agent to
+                    change its instruction, split it in two, or add a check after it.
+                  </li>
+                  <li>
+                    <strong>Run it.</strong> Ask the agent to run the graph. The run stays in the conversation as a live
+                    card: each step as it goes, marked <strong>script, no AI</strong> or <strong>agent</strong>, what it
+                    waits for (answer it right there), and the result as a table when it ends.
+                  </li>
+                  <li>
+                    <strong>Runs that fix themselves.</strong> When a run fails, the agent reads why, fixes the graph,
+                    and runs it again, up to five runs, until it works. It stops and asks when only you can fix the cause
+                    (a login, a missing input, a model your account can't use) and before running again a graph that
+                    buys, sends, or deletes something.
+                  </li>
+                  <li>
+                    <strong>Ask about a run.</strong> Type <code>@</code>, or press the @ button, to mention a run so the
+                    agent reads it. On a run, <strong>Ask the chat</strong> asks why it failed and how to fix it.
+                  </li>
+                </ul>
+              </div>
+              <figure class="shot">
+                <picture>
+                  <source srcset="/img/studio/chat-light.webp" media="(prefers-color-scheme: light)" />
+                  <img
+                    src="/img/studio/chat-dark.webp"
+                    width="380"
+                    height="861"
+                    loading="lazy"
+                    alt="The chat: a request to script a step, the agent's folded work, and two run cards, the second with every step replaying a script"
+                  />
+                </picture>
+              </figure>
+            </div>
+            <p>
+              The agent's work folds into one line, such as <strong>Worked 4.7 s · 3 steps</strong>; click it to see each
+              tool call. Its approvals and questions show in the chat, and its browser shows above the conversation while
+              it works. Slash commands complete with Tab, the model picker sits next to the send button, and
+              <strong>Stop</strong> ends the agent's turn. Unsaved edits on the canvas are saved before a message goes
+              out, so the agent always works on what you see.
+            </p>
+          </section>
+
+          <section id="script">
+            <h2>Script a step with kcode</h2>
+            <p>
+              A step that runs with AI costs tokens and time on every run. Select an agent step and press
+              <strong>Script this step with kcode</strong>, or type <code>/script-step &lt;graph&gt; &lt;step&gt;</code>
+              in the chat or the terminal. The agent:
+            </p>
+            <ol>
+              <li>takes a successful attempt at the step, from a run or by doing it in the browser itself;</li>
+              <li>turns it into a script and attaches it to the step;</li>
+              <li>runs the graph to prove it: the step must show <strong>script, no AI</strong>;</li>
+              <li>if it doesn't, scripts it again and reruns, up to four tries.</li>
+            </ol>
+            <p>
+              This works for steps that read data too, such as a list of products: their script returns what it reads,
+              so later steps and the run's result get the same data the agent would have given. A graph whose steps are
+              all scripted runs in about a second without the model. If the page changes and a script no longer fits,
+              the agent takes over that step for the run.
+            </p>
+            <p>
+              A script belongs to the instruction it was captured for. Change a step's instruction and its card reads
+              <strong>Out of date</strong>: the step runs with AI until it is scripted again.
+            </p>
+          </section>
+
+          <section id="runs">
+            <h2>Runs</h2>
+            <p>
+              <strong>Run</strong> on the Workflows screen saves the graph, asks for any inputs, and opens the run. The Runs
+              screen lists the graph's runs, newest first, with <strong>All</strong>, <strong>Failed</strong>, and
+              <strong>Waiting</strong> filters; the run you open fills the rest of the screen and updates live.
+            </p>
+            <figure class="shot">
+              <picture>
+                <source srcset="/img/studio/run-light.webp" media="(prefers-color-scheme: light)" />
+                <img
+                  src="/img/studio/run-dark.webp"
+                  width="1600"
+                  height="760"
+                  loading="lazy"
+                  alt="A finished run: the runs list, the page the run's browser ended on, every step marked Script with its time, and the result as a table"
+                />
+              </picture>
+              <figcaption>A run where every step replayed a script.</figcaption>
+            </figure>
+            <p>
+              The run's header shows its status, how long it took, how many steps ran without AI, its model, tokens, and
+              cost, with <strong>Pause</strong>, <strong>Resume</strong>, <strong>Cancel</strong>, <strong>Run again</strong>,
+              and <strong>Ask the chat</strong>. Below it, five tabs:
+            </p>
+            <div class="table">
+              <table>
+                <tr>
+                  <th>Tab</th>
+                  <th>What it shows</th>
+                </tr>
+                <tr>
+                  <td><strong>Overview</strong></td>
+                  <td>The run's browser, live while it runs; each step with <strong>Script</strong> or <strong>AI</strong> and its time; and the result</td>
+                </tr>
+                <tr>
+                  <td><strong>Graph</strong></td>
+                  <td>The graph as it ran, with each step's outcome and the path the run took</td>
+                </tr>
+                <tr>
+                  <td><strong>Trace</strong></td>
+                  <td>What every step did: the agent's messages, tool calls, and screenshots</td>
+                </tr>
+                <tr>
+                  <td><strong>Output</strong></td>
+                  <td>The run's result and each step's output</td>
+                </tr>
+                <tr>
+                  <td><strong>Inputs</strong></td>
+                  <td>The inputs the run was given</td>
+                </tr>
+              </table>
+            </div>
+            <p>
+              When a run reaches a login, a captcha, or a decision, a card at the top says what it needs. Answer it,
+              <strong>Approve</strong> what it is waiting to do, or choose <strong>Retry the step</strong> or
+              <strong>Treat as failed</strong>, and the run carries on.
+            </p>
+          </section>
+
+          <section id="schedules">
+            <h2>Schedules</h2>
+            <p>
+              The Schedules screen runs graphs on a timetable. Pick a graph, a cron expression (such as
+              <code>0 9 * * 1-5</code> for 9:00 on weekdays), and a time zone, then <strong>Add schedule</strong>. A
+              schedule runs the graph's published version, so press <strong>Publish</strong> when the graph is ready, and
+              again after you change it. Each schedule shows its next and last run, with <strong>Run now</strong>,
+              <strong>Turn off</strong>, and <strong>Remove</strong>.
+            </p>
+            <p>
+              Schedules fire in whichever KoraCode is open for the project. <code>kcode daemon start</code> keeps one
+              open in the background, so they fire with the studio and the terminal closed.
+            </p>
+          </section>
+
+          <section id="chats">
+            <h2>Projects and chats</h2>
+            <div class="split split-narrow">
+              <div>
+                <p>
+                  Every chat is an ordinary session: the terminal lists it, and the studio can open a conversation you
+                  started in the terminal. The chat's title, or the project's name in the top bar, opens every project
+                  you have opened with KoraCode, each with its chats under it, newest first. The open project comes
+                  first, and a search narrows the chats by title.
+                </p>
+                <p>
+                  Open a chat from another project, or start a <strong>New chat</strong> there, and the studio switches to
+                  that project: its graphs, its runs, and that chat.
+                </p>
+              </div>
+              <figure class="shot">
+                <picture>
+                  <source srcset="/img/studio/chats-light.webp" media="(prefers-color-scheme: light)" />
+                  <img
+                    src="/img/studio/chats-dark.webp"
+                    width="380"
+                    height="445"
+                    loading="lazy"
+                    alt="The list of projects, each with its chats, newest first"
+                  />
+                </picture>
+              </figure>
+            </div>
+          </section>
+
+          <section id="shortcuts">
+            <h2>Shortcuts</h2>
+            <div class="table">
+              <table>
+                <tr>
+                  <th>Keys</th>
+                  <th>Where</th>
+                  <th>What it does</th>
+                </tr>
+                <tr>
+                  <td><kbd>⌘</kbd> <kbd>S</kbd></td>
+                  <td>Workflows</td>
+                  <td>Save the graph</td>
+                </tr>
+                <tr>
+                  <td><kbd>⌘</kbd> <kbd>Z</kbd></td>
+                  <td>Workflows</td>
+                  <td>Undo the last canvas edit</td>
+                </tr>
+                <tr>
+                  <td><kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>Z</kbd></td>
+                  <td>Workflows</td>
+                  <td>Redo</td>
+                </tr>
+                <tr>
+                  <td><kbd>Esc</kbd></td>
+                  <td>Workflows, menus</td>
+                  <td>Close the panel, the dialog, or the menu</td>
+                </tr>
+                <tr>
+                  <td><kbd>Enter</kbd></td>
+                  <td>Chat</td>
+                  <td>Send the message (<kbd>Shift</kbd> <kbd>Enter</kbd> starts a new line)</td>
+                </tr>
+                <tr>
+                  <td><kbd>Tab</kbd></td>
+                  <td>Chat</td>
+                  <td>Complete a slash command or an @ mention</td>
+                </tr>
+              </table>
+            </div>
+            <p>On Windows and Linux, use <kbd>Ctrl</kbd> for <kbd>⌘</kbd>.</p>
+          </section>
+        </article>
+      </div>
+
+      <footer>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/docs/">Docs</a>
+          <a href="/docs/studio/">Studio guide</a>
+          <a href="/papers/">Papers</a>
+          <a href="/dataset/">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a href="https://github.com/tanzil7890/kcode-releases/releases">Releases</a>
+          <a href="/config.json">config.json schema</a>
+        </nav>
+        <span>KoraCode · MIT License</span>
+      </footer>
+    </div>
+
+  </body>
+</html>

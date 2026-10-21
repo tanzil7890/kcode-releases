@@ -1,0 +1,271 @@
+/* The docs pages: an "On this page" list hung on the same dashed graph edge as the home page,
+   with the section being read lit like a graph's current step, beside a readable article. */
+
+.layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 64px;
+  padding-block: 28px 96px;
+}
+.toc {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-size: 14px;
+}
+.toc p {
+  margin: 0 0 14px;
+  font: 12px var(--mono);
+  font-stretch: 87.5%;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.toc nav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.toc nav::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 14px;
+  bottom: 14px;
+  border-left: 1px dashed var(--edge);
+}
+.toc a {
+  position: relative;
+  padding: 5px 0 5px 24px;
+  line-height: 1.4;
+  color: var(--muted);
+  text-decoration: none;
+}
+.toc a::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -4.5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--edge);
+  background: var(--bg);
+}
+.toc a:hover,
+.toc a[aria-current] {
+  color: var(--text);
+}
+.toc a[aria-current]::before {
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+article {
+  min-width: 0;
+  max-width: 780px;
+  font-size: 16.5px;
+  line-height: 1.7;
+}
+article [id] {
+  scroll-margin-top: 24px;
+}
+h1 {
+  font-size: 46px;
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+  margin: 0 0 12px;
+}
+.tagline {
+  margin: 0 0 24px;
+  font-size: 19px;
+  color: var(--muted);
+}
+h2 {
+  font-size: 30px;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+  margin: 72px 0 16px;
+}
+h3 {
+  font: 600 19px/1.35 var(--sans);
+  margin: 36px 0 10px;
+}
+p,
+li {
+  color: var(--muted);
+}
+p strong,
+li strong,
+td strong {
+  color: var(--text);
+  font-weight: 600;
+}
+article a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+ul,
+ol {
+  padding-left: 22px;
+}
+li {
+  margin: 6px 0;
+}
+:not(pre) > code {
+  font-size: 0.8em;
+  font-stretch: 75%;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+kbd {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 6px;
+}
+
+/* Code blocks are terminals: dark in both themes. */
+pre {
+  position: relative;
+  margin: 16px 0;
+  padding: 16px 76px 16px 18px;
+  overflow-x: auto;
+  background: var(--term-bg);
+  color: var(--term-text);
+  border: 1px solid var(--term-line);
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+pre code {
+  font: inherit;
+}
+pre .copy {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font: 500 12px var(--sans);
+  color: var(--term-dim);
+  background: var(--term-panel);
+  border: 1px solid var(--term-line);
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+pre .copy:hover {
+  color: var(--term-text);
+}
+
+.table {
+  overflow-x: auto;
+  margin: 16px 0;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 15px;
+}
+th,
+td {
+  text-align: left;
+  vertical-align: top;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--muted);
+}
+th {
+  font: 12px var(--mono);
+  font-stretch: 87.5%;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--faint);
+  background: var(--surface);
+}
+th code {
+  text-transform: none;
+}
+tr:last-child td {
+  border-bottom: 0;
+}
+.callout {
+  margin: 18px 0;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.callout p {
+  margin: 0;
+}
+.callout p + p {
+  margin-top: 8px;
+}
+article .shot {
+  margin: 24px 0;
+}
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 36px;
+  align-items: start;
+}
+.split .shot {
+  margin: 6px 0 0;
+}
+.split-narrow {
+  grid-template-columns: minmax(0, 1fr) 320px;
+}
+
+@media (max-width: 860px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .toc {
+    position: static;
+    max-height: none;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .toc nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 18px;
+  }
+  .toc nav::before,
+  .toc a::before {
+    display: none;
+  }
+  .toc a {
+    padding-left: 0;
+  }
+  h1 {
+    font-size: 34px;
+  }
+  h2 {
+    font-size: 25px;
+    margin-top: 56px;
+  }
+  .split,
+  .split-narrow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
+  .split .shot {
+    max-width: 320px;
+  }
+}

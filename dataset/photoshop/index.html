@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Adobe Photoshop dataset · KoraCode</title>
+    <meta name="description" content="Image editing in Photoshop, recorded step by step from the first selection to the exported file, and approved by designers." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kcode.outhad.com/dataset/photoshop/" />
+    <meta property="og:title" content="Adobe Photoshop dataset · KoraCode" />
+    <meta property="og:description" content="Image editing in Photoshop, recorded step by step from the first selection to the exported file, and approved by designers." />
+    <meta name="theme-color" content="#0c0c0e" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0c0e'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23fab283'%3Ek%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preload" href="/fonts/martian-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/site.css" />
+    <link rel="stylesheet" href="/dataset/dataset.css" />
+    <script src="/site.js" defer></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a class="brand" href="/">kora<span>code</span><em>dataset</em></a>
+        <nav>
+          <a href="/docs/studio/">Studio</a>
+          <a href="/docs/">Docs</a>
+          <a href="/papers/">Papers</a>
+          <a class="keep" href="/dataset/" aria-current="page">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a class="ver keep" data-version href="https://github.com/tanzil7890/kcode-releases/releases/latest">v0.4.0</a>
+        </nav>
+      </header>
+
+      <main class="page">
+        <p class="eyebrow"><a href="/dataset/">Dataset</a> / Adobe Photoshop</p>
+        <div class="title-row">
+          <h1>Adobe Photoshop</h1>
+          <span class="pill">Available</span>
+        </div>
+        <p class="lead">Image editing in Photoshop, recorded step by step from the first selection to the exported file, and approved by designers.</p>
+        <dl class="stats">
+          <div><dt>Workflows</dt><dd>6</dd></div>
+          <div><dt>Recorded</dt><dd>Tools, layers, history</dd></div>
+          <div><dt>Output</dt><dd>Before and after</dd></div>
+          <div><dt>Personal data</dt><dd>None</dd></div>
+        </dl>
+        <div class="actions">
+          <a class="button" href="mailto:info@outhad.com?subject=Adobe%20Photoshop%20dataset">Contact us about this dataset</a>
+          <a class="link" href="/dataset/">All datasets</a>
+        </div>
+
+        <section class="block" aria-labelledby="types-title">
+          <h2 id="types-title">Types of data</h2>
+          <section class="type">
+            <h3>Environments</h3>
+            <p>Photoshop documents with a brief, such as removing a background and placing the product on white, and a grader that checks the layers and the exported image.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Reinforcement learning with checkable rewards</dd></div>
+              <div><dt>Format</dt><dd>PSD files, task specs in JSON, one grader per task</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Trajectories</h3>
+            <p>Every tool, menu, and setting used, with the layer tree and a screenshot after each step, and the reason for it.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Fine-tuning and step-level rewards</dd></div>
+              <div><dt>Format</dt><dd>One JSON file per run, with layer state and a screenshot per step, plus before and after images</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Human feedback</h3>
+            <p>What a designer approved, retouched again, or rejected, with the change and the reason.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Preference training on visual quality</dd></div>
+              <div><dt>Format</dt><dd>One JSON line per review, with both images</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Evals</h3>
+            <p>Private editing tasks, refreshed every quarter, scored on the layer structure and the final image.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Clean measurement no model has trained on</dd></div>
+              <div><dt>Format</dt><dd>Run by us against your model; you get a scored report</dd></div>
+            </dl>
+          </section>
+        </section>
+
+        <section class="block" aria-labelledby="record-title">
+          <h2 id="record-title">One record</h2>
+          <p class="intro">A trajectory is one JSON file, with the layer tree and a screenshot for every step, and the image before and after.</p>
+          <pre><code>{
+  <span class="k">"task"</span>: <span class="s">"Remove the background and place the product on a white canvas"</span>,
+  <span class="k">"dataset"</span>: <span class="s">"photoshop"</span>,
+  <span class="k">"workflow"</span>: <span class="s">"masking"</span>,
+  <span class="k">"steps"</span>: [
+    {
+      <span class="k">"n"</span>: <span class="n">4</span>,
+      <span class="k">"panel"</span>: <span class="s">"Layers · Product"</span>,
+      <span class="k">"layers"</span>: <span class="s">"steps/0004.json"</span>,
+      <span class="k">"screenshot"</span>: <span class="s">"steps/0004.webp"</span>,
+      <span class="k">"action"</span>: <span class="s">"Select &gt; Subject, then Add Layer Mask"</span>,
+      <span class="k">"reason"</span>: <span class="s">"A mask hides the background and keeps the original pixels editable."</span>,
+      <span class="k">"progress"</span>: <span class="s">"advanced"</span>
+    }
+  ],
+  <span class="k">"images"</span>: {
+    <span class="k">"before"</span>: <span class="s">"before.png"</span>,
+    <span class="k">"after"</span>: <span class="s">"after.png"</span>
+  },
+  <span class="k">"review"</span>: {
+    <span class="k">"result"</span>: <span class="s">"approved"</span>,
+    <span class="k">"edited"</span>: <span class="n">false</span>
+  },
+  <span class="k">"grade"</span>: {
+    <span class="k">"checks_passed"</span>: <span class="n">6</span>,
+    <span class="k">"checks"</span>: <span class="n">6</span>
+  }
+}</code></pre>
+        </section>
+
+        <section class="block" aria-labelledby="covers-title">
+          <h2 id="covers-title">What it covers</h2>
+          <p class="label">Workflows</p>
+          <ul class="chips">
+              <li>Retouching</li>
+              <li>Background removal and masking</li>
+              <li>Compositing</li>
+              <li>Color grading</li>
+              <li>Text and layout</li>
+              <li>Batch export</li>
+          </ul>
+          <p class="label">Images</p>
+          <ul class="chips">
+              <li>Product photos</li>
+              <li>Portraits</li>
+              <li>Real estate</li>
+              <li>Marketing graphics</li>
+          </ul>
+          <p class="label">Recorded</p>
+          <ul class="chips">
+              <li>Tools and menus</li>
+              <li>Layers and masks</li>
+              <li>History</li>
+              <li>Before and after images</li>
+          </ul>
+        </section>
+
+        <section class="block" aria-labelledby="made-title">
+          <h2 id="made-title">How a record is made</h2>
+          <ol class="path">
+            <li>
+              <h3>Real work</h3>
+              <p>A designer or an agent edits an image in Photoshop, and a designer approves the result.</p>
+            </li>
+            <li>
+              <h3>Recorded</h3>
+              <p>Every tool, setting, and layer change is kept, with the image before and after.</p>
+            </li>
+            <li>
+              <h3>Cleared for use</h3>
+              <p>Faces, names, and client marks are replaced, or released by their owners.</p>
+            </li>
+            <li>
+              <h3>Graded</h3>
+              <p>The output is checked against the approved edit, layer by layer and pixel by pixel.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="block" aria-labelledby="privacy-title">
+          <h2 id="privacy-title">Privacy</h2>
+          <ul class="rules">
+            <li><strong>Every image is licensed for training</strong> or made for the dataset.</li>
+            <li><strong>No personal data is delivered.</strong> Faces and names are synthetic, or released by the people in them.</li>
+            <li><strong>Client work is included only</strong> with written permission.</li>
+            <li><strong>Recorded in Adobe Photoshop.</strong> Adobe and Photoshop are trademarks of Adobe. KoraCode is not affiliated with Adobe.</li>
+          </ul>
+        </section>
+
+        <section class="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title">Want a specific type or workflow?</h2>
+          <p>Tell us the kind of edit, the kind of image, the type of data, and how much you need.</p>
+          <div class="actions">
+            <a class="button" href="mailto:info@outhad.com?subject=Adobe%20Photoshop%20dataset">Contact us</a>
+            <a class="link" href="mailto:info@outhad.com">info@outhad.com</a>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/docs/">Docs</a>
+          <a href="/docs/studio/">Studio guide</a>
+          <a href="/papers/">Papers</a>
+          <a href="/dataset/">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a href="https://github.com/tanzil7890/kcode-releases/releases">Releases</a>
+        </nav>
+        <span>KoraCode · MIT License</span>
+      </footer>
+    </div>
+  </body>
+</html>

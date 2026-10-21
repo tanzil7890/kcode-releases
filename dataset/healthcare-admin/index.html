@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Healthcare admin dataset · KoraCode</title>
+    <meta name="description" content="Clinic work in EHRs, payer portals, and fax inboxes, recorded live and delivered without patient data." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kcode.outhad.com/dataset/healthcare-admin/" />
+    <meta property="og:title" content="Healthcare admin dataset · KoraCode" />
+    <meta property="og:description" content="Clinic work in EHRs, payer portals, and fax inboxes, recorded live and delivered without patient data." />
+    <meta name="theme-color" content="#0c0c0e" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0c0e'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23fab283'%3Ek%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preload" href="/fonts/martian-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/site.css" />
+    <link rel="stylesheet" href="/dataset/dataset.css" />
+    <script src="/site.js" defer></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a class="brand" href="/">kora<span>code</span><em>dataset</em></a>
+        <nav>
+          <a href="/docs/studio/">Studio</a>
+          <a href="/docs/">Docs</a>
+          <a href="/papers/">Papers</a>
+          <a class="keep" href="/dataset/" aria-current="page">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a class="ver keep" data-version href="https://github.com/tanzil7890/kcode-releases/releases/latest">v0.4.0</a>
+        </nav>
+      </header>
+
+      <main class="page">
+        <p class="eyebrow"><a href="/dataset/">Dataset</a> / Healthcare admin</p>
+        <div class="title-row">
+          <h1>Healthcare admin</h1>
+          <span class="pill">Available</span>
+        </div>
+        <p class="lead">Clinic work in EHRs, payer portals, and fax inboxes, recorded live and delivered without patient data.</p>
+        <dl class="stats">
+          <div><dt>Specialties</dt><dd>8+</dd></div>
+          <div><dt>Systems</dt><dd>9 EHRs and portals</dd></div>
+          <div><dt>Human sign-off</dt><dd>Every task</dd></div>
+          <div><dt>Patient data</dt><dd>None</dd></div>
+        </dl>
+        <div class="actions">
+          <a class="button" href="mailto:info@outhad.com?subject=Healthcare%20admin%20dataset">Contact us about this dataset</a>
+          <a class="link" href="/dataset/">All datasets</a>
+        </div>
+
+        <section class="block" aria-labelledby="types-title">
+          <h2 id="types-title">Types of data</h2>
+          <section class="type">
+            <h3>Environments</h3>
+            <p>Simulated EHRs, payer portals, and fax inboxes filled with synthetic patients. Every task has a goal, a starting state, a step limit, and a grader.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Reinforcement learning with checkable rewards</dd></div>
+              <div><dt>Format</dt><dd>Hosted app, task specs in JSON, one grader per task</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Trajectories</h3>
+            <p>Complete runs of real workflows: each page, each action, and why. Successes and failures, with the step where a run first went wrong marked.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Fine-tuning and step-level rewards</dd></div>
+              <div><dt>Format</dt><dd>One JSON file per run, with a page snapshot and screenshot per step</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Human feedback</h3>
+            <p>What clinic staff approved, edited, or sent back, with the edit and the reason. It shows where an agent should stop and ask.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Preference training and knowing when to ask</dd></div>
+              <div><dt>Format</dt><dd>One JSON line per review: the work, the decision, the edit, the reason</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Evals</h3>
+            <p>Referrals, prior authorizations, and appeals that are never published, refreshed every quarter.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Clean measurement no model has trained on</dd></div>
+              <div><dt>Format</dt><dd>Run by us against your model; you get a scored report</dd></div>
+            </dl>
+          </section>
+        </section>
+
+        <section class="block" aria-labelledby="record-title">
+          <h2 id="record-title">One record</h2>
+          <p class="intro">A trajectory is one JSON file, with a page snapshot and a screenshot for every step. The patient is always synthetic.</p>
+          <pre><code>{
+  <span class="k">"task"</span>: <span class="s">"File a prior authorization for an MRI of the lumbar spine"</span>,
+  <span class="k">"dataset"</span>: <span class="s">"healthcare_admin"</span>,
+  <span class="k">"workflow"</span>: <span class="s">"prior_authorization"</span>,
+  <span class="k">"patient"</span>: <span class="s">"synthetic"</span>,
+  <span class="k">"steps"</span>: [
+    {
+      <span class="k">"n"</span>: <span class="n">7</span>,
+      <span class="k">"page"</span>: <span class="s">"Payer portal · Authorization request"</span>,
+      <span class="k">"snapshot"</span>: <span class="s">"steps/0007.json"</span>,
+      <span class="k">"screenshot"</span>: <span class="s">"steps/0007.webp"</span>,
+      <span class="k">"action"</span>: <span class="s">"fill({ label: \"CPT code\" }, \"72148\")"</span>,
+      <span class="k">"reason"</span>: <span class="s">"The order is for CPT 72148, MRI of the lumbar spine without contrast."</span>,
+      <span class="k">"progress"</span>: <span class="s">"advanced"</span>
+    }
+  ],
+  <span class="k">"sign_off"</span>: {
+    <span class="k">"result"</span>: <span class="s">"approved"</span>,
+    <span class="k">"edited"</span>: <span class="n">false</span>
+  },
+  <span class="k">"grade"</span>: {
+    <span class="k">"checks_passed"</span>: <span class="n">9</span>,
+    <span class="k">"checks"</span>: <span class="n">9</span>
+  }
+}</code></pre>
+        </section>
+
+        <section class="block" aria-labelledby="covers-title">
+          <h2 id="covers-title">What it covers</h2>
+          <p class="label">Workflows</p>
+          <ul class="chips">
+              <li>Referral intake</li>
+              <li>Fax triage</li>
+              <li>Eligibility checks</li>
+              <li>Prior authorization</li>
+              <li>Denial appeals</li>
+              <li>Scheduling</li>
+          </ul>
+          <p class="label">Specialties</p>
+          <ul class="chips">
+              <li>GI and endoscopy</li>
+              <li>Cardiology</li>
+              <li>Retina and ophthalmology</li>
+              <li>Behavioral health</li>
+              <li>Primary care</li>
+              <li>Vein and vascular</li>
+              <li>Physical therapy</li>
+              <li>Pain and spine</li>
+          </ul>
+          <p class="label">Workflows seen in</p>
+          <ul class="chips">
+              <li>Epic</li>
+              <li>eClinicalWorks</li>
+              <li>athenahealth</li>
+              <li>NextGen</li>
+              <li>Elation</li>
+              <li>Tebra</li>
+              <li>Office Ally</li>
+              <li>Oracle Health</li>
+              <li>Availity</li>
+          </ul>
+        </section>
+
+        <section class="block" aria-labelledby="made-title">
+          <h2 id="made-title">How a record is made</h2>
+          <p class="intro"><a href="https://www.deskshifts.com/">DeskShifts</a> runs Eva, an AI employee, inside clinics' own EHRs, payer portals, and fax inboxes. Eva sorts faxes, enters referrals, checks eligibility, files prior authorizations, and appeals denials, and a person at the clinic signs off on her work.</p>
+          <ol class="path">
+            <li>
+              <h3>Real work</h3>
+              <p>Eva does a task in the clinic's own system, the way a new hire would, through the browser.</p>
+            </li>
+            <li>
+              <h3>Recorded</h3>
+              <p>Every page, every action, and the reason for it is kept, along with what the clinic approved.</p>
+            </li>
+            <li>
+              <h3>Rebuilt without patients</h3>
+              <p>Names, dates, IDs, and notes are replaced with synthetic patients, and the task is replayed on a simulated portal. Nothing from the clinic's records leaves the clinic.</p>
+            </li>
+            <li>
+              <h3>Graded</h3>
+              <p>The replay is checked against the outcome the clinic approved, so every record has a verified answer.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="block" aria-labelledby="privacy-title">
+          <h2 id="privacy-title">Privacy</h2>
+          <ul class="rules">
+            <li><strong>No patient data leaves the clinic.</strong> Every record is rebuilt on synthetic patients before it is delivered.</li>
+            <li><strong>De-identified to the HIPAA standard.</strong> Each release is reviewed by an independent expert before it ships.</li>
+            <li><strong>Clinics opt in by contract,</strong> and can withdraw their workflows from future releases.</li>
+            <li><strong>Simulated portals are look-alikes,</strong> built for the workflow, not copies of any vendor's software.</li>
+          </ul>
+        </section>
+
+        <section class="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title">Want a specific type or workflow?</h2>
+          <p>Tell us the workflow, the specialty, the type of data, and how much you need.</p>
+          <div class="actions">
+            <a class="button" href="mailto:info@outhad.com?subject=Healthcare%20admin%20dataset">Contact us</a>
+            <a class="link" href="mailto:info@outhad.com">info@outhad.com</a>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/docs/">Docs</a>
+          <a href="/docs/studio/">Studio guide</a>
+          <a href="/papers/">Papers</a>
+          <a href="/dataset/">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a href="https://github.com/tanzil7890/kcode-releases/releases">Releases</a>
+        </nav>
+        <span>KoraCode · MIT License</span>
+      </footer>
+    </div>
+  </body>
+</html>

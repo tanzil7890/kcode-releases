@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unity dataset · KoraCode</title>
+    <meta name="description" content="Game and 3D work in the Unity editor, recorded step by step from an empty scene to a clean build, and reviewed by developers." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kcode.outhad.com/dataset/unity/" />
+    <meta property="og:title" content="Unity dataset · KoraCode" />
+    <meta property="og:description" content="Game and 3D work in the Unity editor, recorded step by step from an empty scene to a clean build, and reviewed by developers." />
+    <meta name="theme-color" content="#0c0c0e" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0c0e'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23fab283'%3Ek%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preload" href="/fonts/martian-mono.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/site.css" />
+    <link rel="stylesheet" href="/dataset/dataset.css" />
+    <script src="/site.js" defer></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a class="brand" href="/">kora<span>code</span><em>dataset</em></a>
+        <nav>
+          <a href="/docs/studio/">Studio</a>
+          <a href="/docs/">Docs</a>
+          <a href="/papers/">Papers</a>
+          <a class="keep" href="/dataset/" aria-current="page">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a class="ver keep" data-version href="https://github.com/tanzil7890/kcode-releases/releases/latest">v0.4.0</a>
+        </nav>
+      </header>
+
+      <main class="page">
+        <p class="eyebrow"><a href="/dataset/">Dataset</a> / Unity</p>
+        <div class="title-row">
+          <h1>Unity</h1>
+          <span class="pill">Available</span>
+        </div>
+        <p class="lead">Game and 3D work in the Unity editor, recorded step by step from an empty scene to a clean build, and reviewed by developers.</p>
+        <dl class="stats">
+          <div><dt>Workflows</dt><dd>8</dd></div>
+          <div><dt>Recorded</dt><dd>Editor, code, console</dd></div>
+          <div><dt>Checked by</dt><dd>Tests and a build</dd></div>
+          <div><dt>Personal data</dt><dd>None</dd></div>
+        </dl>
+        <div class="actions">
+          <a class="button" href="mailto:info@outhad.com?subject=Unity%20dataset">Contact us about this dataset</a>
+          <a class="link" href="/dataset/">All datasets</a>
+        </div>
+
+        <section class="block" aria-labelledby="types-title">
+          <h2 id="types-title">Types of data</h2>
+          <section class="type">
+            <h3>Environments</h3>
+            <p>Unity projects with a task, such as making a door open when the player walks up, and a grader that checks the scene, runs play-mode tests, and builds the project.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Reinforcement learning with checkable rewards</dd></div>
+              <div><dt>Format</dt><dd>Unity projects, task specs in JSON, tests per task</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Trajectories</h3>
+            <p>Every editor action and code change, with the Hierarchy, Inspector, and Console after each step, and the reason for it.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Fine-tuning and step-level rewards</dd></div>
+              <div><dt>Format</dt><dd>One JSON file per run, with scene state, code diff, and a screenshot per step</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Human feedback</h3>
+            <p>What a developer approved, changed, or reverted, with the diff and the reason.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Preference training on code and scene changes</dd></div>
+              <div><dt>Format</dt><dd>One JSON line per review, with the diff</dd></div>
+            </dl>
+          </section>
+          <section class="type">
+            <h3>Evals</h3>
+            <p>Private tasks, refreshed every quarter, scored by tests, scene checks, and a clean build.</p>
+            <dl class="facts">
+              <div><dt>For</dt><dd>Clean measurement no model has trained on</dd></div>
+              <div><dt>Format</dt><dd>Run by us against your model; you get a scored report</dd></div>
+            </dl>
+          </section>
+        </section>
+
+        <section class="block" aria-labelledby="record-title">
+          <h2 id="record-title">One record</h2>
+          <p class="intro">A trajectory is one JSON file, with the scene state, any code change, and a screenshot for every step.</p>
+          <pre><code>{
+  <span class="k">"task"</span>: <span class="s">"Make the door open when the player walks up to it"</span>,
+  <span class="k">"dataset"</span>: <span class="s">"unity"</span>,
+  <span class="k">"workflow"</span>: <span class="s">"scripting"</span>,
+  <span class="k">"steps"</span>: [
+    {
+      <span class="k">"n"</span>: <span class="n">12</span>,
+      <span class="k">"window"</span>: <span class="s">"Inspector · Door"</span>,
+      <span class="k">"scene"</span>: <span class="s">"steps/0012.json"</span>,
+      <span class="k">"screenshot"</span>: <span class="s">"steps/0012.webp"</span>,
+      <span class="k">"action"</span>: <span class="s">"Add Component &gt; Box Collider, set Is Trigger"</span>,
+      <span class="k">"reason"</span>: <span class="s">"The door script listens for OnTriggerEnter, which needs a trigger collider."</span>,
+      <span class="k">"progress"</span>: <span class="s">"advanced"</span>
+    }
+  ],
+  <span class="k">"result"</span>: {
+    <span class="k">"play_mode"</span>: <span class="s">"door opens"</span>,
+    <span class="k">"console_errors"</span>: <span class="n">0</span>,
+    <span class="k">"build"</span>: <span class="s">"passed"</span>
+  },
+  <span class="k">"review"</span>: {
+    <span class="k">"result"</span>: <span class="s">"approved"</span>,
+    <span class="k">"edited"</span>: <span class="n">false</span>
+  },
+  <span class="k">"grade"</span>: {
+    <span class="k">"checks_passed"</span>: <span class="n">5</span>,
+    <span class="k">"checks"</span>: <span class="n">5</span>
+  }
+}</code></pre>
+        </section>
+
+        <section class="block" aria-labelledby="covers-title">
+          <h2 id="covers-title">What it covers</h2>
+          <p class="label">Workflows</p>
+          <ul class="chips">
+              <li>Scene setup</li>
+              <li>Prefabs</li>
+              <li>C# scripting</li>
+              <li>Lighting</li>
+              <li>Animation</li>
+              <li>UI</li>
+              <li>Debugging</li>
+              <li>Builds</li>
+          </ul>
+          <p class="label">Projects</p>
+          <ul class="chips">
+              <li>2D games</li>
+              <li>3D games</li>
+              <li>Simulations</li>
+              <li>AR and VR</li>
+          </ul>
+          <p class="label">Recorded</p>
+          <ul class="chips">
+              <li>Editor actions</li>
+              <li>Hierarchy and Inspector</li>
+              <li>Code edits</li>
+              <li>Console and play mode</li>
+          </ul>
+        </section>
+
+        <section class="block" aria-labelledby="made-title">
+          <h2 id="made-title">How a record is made</h2>
+          <ol class="path">
+            <li>
+              <h3>Real work</h3>
+              <p>A developer or an agent works in the Unity editor, and a developer reviews the result.</p>
+            </li>
+            <li>
+              <h3>Recorded</h3>
+              <p>Every editor action and code change is kept, with the console and play-mode results.</p>
+            </li>
+            <li>
+              <h3>Cleared for use</h3>
+              <p>Client code, assets, and keys are removed, or licensed by their owners.</p>
+            </li>
+            <li>
+              <h3>Graded</h3>
+              <p>Play-mode tests run and the project builds, so every record has a verified result.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="block" aria-labelledby="privacy-title">
+          <h2 id="privacy-title">Privacy</h2>
+          <ul class="rules">
+            <li><strong>Every project is made for the dataset</strong> or licensed by its owner.</li>
+            <li><strong>No personal data, credentials, or keys</strong> are delivered.</li>
+            <li><strong>Client code is included only</strong> with written permission.</li>
+            <li><strong>Recorded in the Unity editor.</strong> Unity is a trademark of Unity Technologies. KoraCode is not affiliated with Unity.</li>
+          </ul>
+        </section>
+
+        <section class="contact" aria-labelledby="contact-title">
+          <h2 id="contact-title">Want a specific type or workflow?</h2>
+          <p>Tell us the kind of project, the workflow, the type of data, and how much you need.</p>
+          <div class="actions">
+            <a class="button" href="mailto:info@outhad.com?subject=Unity%20dataset">Contact us</a>
+            <a class="link" href="mailto:info@outhad.com">info@outhad.com</a>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/docs/">Docs</a>
+          <a href="/docs/studio/">Studio guide</a>
+          <a href="/papers/">Papers</a>
+          <a href="/dataset/">Dataset</a>
+          <a href="https://github.com/tanzil7890/kcode-releases">GitHub</a>
+          <a href="https://github.com/tanzil7890/kcode-releases/releases">Releases</a>
+        </nav>
+        <span>KoraCode · MIT License</span>
+      </footer>
+    </div>
+  </body>
+</html>
